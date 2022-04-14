@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="viewModel"
+            type="com.kailin.basic_arch.ui.login.LoginViewModel" />
+
+        <variable
+            name="eventProxy"
+            type="com.kailin.basic_arch.ui.login.LoginEventProxy" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+            android:paddingVertical="@dimen/fragment_vertical_margin">
+
+            <com.kailin.basic_arch.widget.EditTextInputLayout
+                android:id="@+id/usernameInputLayout"
+                style="@style/Theme.CoroutinesArch.CustomView.EditTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{!viewModel.isLoading()}"
+                android:hint="@string/login_username"
+                app:error="@{context.getString(viewModel.usernameError)}"
+                app:layout_constraintBottom_toTopOf="@id/passwordInputLayout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <com.kailin.basic_arch.widget.EditText
+                    android:id="@+id/usernameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textVisiblePassword"
+                    android:text="@={viewModel.username}" />
+
+            </com.kailin.basic_arch.widget.EditTextInputLayout>
+
+            <com.kailin.basic_arch.widget.EditTextInputLayout
+                android:id="@+id/passwordInputLayout"
+                style="@style/Theme.CoroutinesArch.CustomView.EditTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_vertical_margin"
+                android:enabled="@{!viewModel.isLoading()}"
+                android:hint="@string/login_password"
+                app:error="@{context.getString(viewModel.passwordError)}"
+                app:layout_constraintBottom_toTopOf="@id/loginButton"
+                app:layout_constraintTop_toBottomOf="@id/usernameInputLayout">
+
+                <com.kailin.basic_arch.widget.EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionSend"
+                    android:inputType="@{viewModel.displayedPassword?InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT}"
+                    android:text="@={viewModel.password}" />
+
+            </com.kailin.basic_arch.widget.EditTextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/passwordEye"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{()->viewModel.switchPasswordDisplayed()}"
+                android:scaleType="centerInside"
+                android:src="@{viewModel.displayedPassword?@drawable/ic_baseline_visibility_off_24:@drawable/ic_baseline_visibility_on_24}"
+                app:layout_constraintBottom_toBottomOf="@id/passwordInputLayout"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/passwordInputLayout" />
+
+            <com.kailin.basic_arch.widget.Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_selector"
+                android:enabled="@{!viewModel.isLoading()}"
+                android:onClick="@{()->eventProxy.onClickLogin()}"
+                android:text="@string/login_login"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.75" />
+
+            <com.kailin.basic_arch.widget.Button
+                android:id="@+id/devLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_selector"
+                android:enabled="@{!viewModel.isLoading()}"
+                android:onClick="@{()->eventProxy.onClickDevLogin()}"
+                android:text="@string/login_login"
+                android:textAllCaps="false"
+                android:visibility="@{viewModel.isShowDevLogin()? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading()? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

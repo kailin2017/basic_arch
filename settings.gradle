@@ -1,0 +1,2 @@
+rootProject.name = "Basic Arch"
+include ':app'

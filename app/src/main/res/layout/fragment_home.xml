@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kailin.basic_arch.ui.home.HomeViewModel" />
+
+        <variable
+            name="eventProxy"
+            type="com.kailin.basic_arch.ui.home.HomeEventProxy" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/view_horizontal_margin"
+            android:paddingVertical="@dimen/view_vertical_margin">
+
+            <com.kailin.basic_arch.widget.Button
+                android:id="@+id/github"
+                style="@style/Theme.CoroutinesArch.CustomView.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->eventProxy.onClickGithub()}"
+                android:text="@string/home_github" />
+
+            <com.kailin.basic_arch.widget.Button
+                android:id="@+id/news"
+                style="@style/Theme.CoroutinesArch.CustomView.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_vertical_margin"
+                android:onClick="@{()->eventProxy.onClickNews()}"
+                android:text="@string/home_news" />
+
+            <com.kailin.basic_arch.widget.Button
+                android:id="@+id/login"
+                style="@style/Theme.CoroutinesArch.CustomView.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_vertical_margin"
+                android:onClick="@{()->eventProxy.onClickLogin()}"
+                android:text="@string/home_login" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
