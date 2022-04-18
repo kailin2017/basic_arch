@@ -3,6 +3,7 @@ package com.kailin.basic_arch.data.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.kailin.basic_arch.data.RepoResult
+import com.kailin.basic_arch.model.user.UserInfo
 
 class LoginRepositoryImpl(
     private val dataSource: LoginDataSource,

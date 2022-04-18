@@ -1,9 +1,12 @@
 package com.kailin.basic_arch.ui.news
 
 import androidx.lifecycle.*
+import com.kailin.basic_arch.api.news.TaipeiNewsResponse
+import com.kailin.basic_arch.api.news.TaipeiNewsService
 import com.kailin.basic_arch.app.DataStateViewModel
 import com.kailin.basic_arch.data.RepoResult
 import com.kailin.basic_arch.data.news.*
+import com.kailin.basic_arch.model.news.TaipeiNews
 import com.kailin.basic_arch.utils.connect.ConnectHelper
 import kotlinx.coroutines.launch
 
@@ -17,7 +20,7 @@ class NewsViewModel : DataStateViewModel() {
 
     val timeZone: LiveData<String> = mNewsRepository.userInfo().map { it.timeZone }
 
-    val taipeiNews: LiveData<List<TaipeiNewsItem>> =
+    val taipeiNews: LiveData<List<TaipeiNews>> =
         mNewsRepository.observerNews().switchMap { filterTaipeiNews(it) }
 
     private val _isEmpty = MutableLiveData(false)
@@ -36,11 +39,11 @@ class NewsViewModel : DataStateViewModel() {
         }
     }
 
-    private fun filterTaipeiNews(result: RepoResult<TaipeiNews>): LiveData<List<TaipeiNewsItem>> {
-        val liveData = MutableLiveData<List<TaipeiNewsItem>>()
+    private fun filterTaipeiNews(result: RepoResult<TaipeiNewsResponse>): LiveData<List<TaipeiNews>> {
+        val liveData = MutableLiveData<List<TaipeiNews>>()
         when (result) {
             is RepoResult.Success -> {
-                val data: TaipeiNews = result.data
+                val data: TaipeiNewsResponse = result.data
                 if (data.News.isNullOrEmpty()) {
                     _isEmpty.value = true
                 } else {

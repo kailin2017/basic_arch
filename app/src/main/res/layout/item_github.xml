@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.kailin.basic_arch.data.github.RepoItem" />
+            type="com.kailin.basic_arch.model.github.Repo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

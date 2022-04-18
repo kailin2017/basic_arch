@@ -1,11 +1,9 @@
 package com.kailin.basic_arch.data
 
-import com.kailin.basic_arch.data.error.ErrorRespData
-
 sealed class RepoResult<out R> {
 
     data class Success<out T>(val data: T) : RepoResult<T>()
-    data class Error(val exception: Exception, val data: ErrorRespData? = null) :
+    data class Error(val exception: Exception, val data: RepoErrorData? = null) :
         RepoResult<Nothing>()
 
     object Loading : RepoResult<Nothing>()

@@ -1,51 +1,35 @@
 package com.kailin.basic_arch.ui.github
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.kailin.basic_arch.app.DataStateViewModel
-import com.kailin.basic_arch.data.RepoResult
-import com.kailin.basic_arch.data.github.*
+import com.kailin.basic_arch.data.github.GithubPagingRepository
+import com.kailin.basic_arch.api.github.GithubService
+import com.kailin.basic_arch.model.github.Repo
 import com.kailin.basic_arch.utils.connect.ConnectHelper
-import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.flow.Flow
 
 class GithubViewModel : DataStateViewModel() {
 
-    private val repository: GithubRepository by lazy {
+    private val githubPagingRepository: GithubPagingRepository by lazy {
         val service = ConnectHelper.createService(GithubService::class.java)
-        val dataSource = GithubDataSourceImpl(service)
-        return@lazy GithubRepositoryImpl(dataSource)
+        return@lazy GithubPagingRepository(service = service)
     }
+    private var currentKeyword: String? = null
+    private var mCurrentRepo: Flow<PagingData<Repo>>? = null
     private val _keyword = MutableLiveData<String>()
     val keyword = _keyword
-    val repoDataClear: LiveData<Unit> = repository.observerSearchClear()
-    val repoData: LiveData<List<RepoItem>> =
-        repository.observerSearch().distinctUntilChanged().switchMap { searchRepoSwitchMap(it) }
 
-
-    init {
-        _isLoading.addSource(repository.observerSearch().map { it is RepoResult.Loading }) {
-            _isLoading.value = it
+    fun searchRepo(): Flow<PagingData<Repo>>? {
+        val keywordValue: String = _keyword.value ?: ""
+        if (currentKeyword == keywordValue) {
+            return mCurrentRepo
         }
-    }
-
-    fun searchRepo() {
-        val keywordValue: String = _keyword.value ?: return
-        viewModelScope.launch {
-            repository.search(keyword = keywordValue)
-        }
-    }
-
-    @Suppress("NON_EXHAUSTIVE_WHEN_STATEMENT")
-    private fun searchRepoSwitchMap(repoResult: RepoResult<RepoData>): LiveData<List<RepoItem>> {
-        val liveData = MutableLiveData<List<RepoItem>>()
-        when (repoResult) {
-            is RepoResult.Success -> {
-                liveData.value = repoResult.data.items
-            }
-            is RepoResult.Error -> {
-                exception(repoResult.exception)
-            }
-        }
-        return liveData
+        currentKeyword = keywordValue
+        mCurrentRepo =
+            githubPagingRepository.getPagingData(currentKeyword!!).cachedIn(viewModelScope)
+        return mCurrentRepo
     }
 }

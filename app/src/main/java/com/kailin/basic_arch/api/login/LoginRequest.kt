@@ -1,6 +1,6 @@
-package com.kailin.basic_arch.data.login
+package com.kailin.basic_arch.api.login
 
-data class LoginReq(
+data class LoginRequest(
     val username: String,
     val password: String,
 ) {

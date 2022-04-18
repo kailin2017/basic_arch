@@ -1,6 +1,6 @@
-package com.kailin.basic_arch.data.github
+package com.kailin.basic_arch.model.github
 
-data class RepoItem(
+data class Repo(
     val allow_forking: Boolean,
     val archive_url: String,
     val archived: Boolean,

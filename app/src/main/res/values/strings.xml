@@ -21,6 +21,7 @@
     <string name="item_watch">Watch %d</string>
     <string name="item_star">Star %d</string>
     <string name="item_fork">Fork %d</string>
+    <string name="item_retry">Retry</string>
 
     <string name="news_title">News</string>
 
@@ -31,6 +32,5 @@
     <string name="dialog_update">update</string>
 
     <string name="inputText_blank"/>
-
 
 </resources>

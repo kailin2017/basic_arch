@@ -2,8 +2,11 @@ package com.kailin.basic_arch.data.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.kailin.basic_arch.api.login.LoginRequest
+import com.kailin.basic_arch.api.login.LoginService
 import com.kailin.basic_arch.data.RepoResult
-import com.kailin.basic_arch.data.error.ErrorRespData
+import com.kailin.basic_arch.data.RepoErrorData
+import com.kailin.basic_arch.model.user.UserInfo
 import com.kailin.basic_arch.utils.connect.toData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -22,13 +25,13 @@ class LoginDataSourceImpl(
     override suspend fun login(username: String, password: String) = withContext(dispatcher) {
         try {
             loginRespData.postValue(RepoResult.Loading)
-            val response = loginService.login(LoginReq(username, password), UserInfoDataSource.getHeaderMap())
+            val response = loginService.login(LoginRequest(username, password), UserInfoDataSource.getHeaderMap())
             loginRespData.postValue(
                 if (response.isSuccessful && response.body() != null) {
                     RepoResult.Success(response.body()!!)
                 } else if (response.errorBody() != null) {
                     val data =
-                        response.errorBody()?.toData<ErrorRespData>(ErrorRespData::class.java)
+                        response.errorBody()?.toData<RepoErrorData>(RepoErrorData::class.java)
                     RepoResult.Error(HttpException(response), data)
                 } else {
                     RepoResult.Error(HttpException(response))

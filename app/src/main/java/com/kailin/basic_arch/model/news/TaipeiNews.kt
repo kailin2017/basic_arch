@@ -1,9 +1,9 @@
-package com.kailin.basic_arch.data.news
+package com.kailin.basic_arch.model.news
 
 import com.kailin.basic_arch.utils.toDate
 import java.util.*
 
-data class TaipeiNewsItem(
+data class TaipeiNews(
     val chtmessage: String,
     val content: String,
     val endtime: String,

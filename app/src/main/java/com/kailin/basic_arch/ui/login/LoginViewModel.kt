@@ -3,9 +3,11 @@ package com.kailin.basic_arch.ui.login
 import androidx.lifecycle.*
 import com.kailin.basic_arch.BuildConfig
 import com.kailin.basic_arch.R
+import com.kailin.basic_arch.api.login.LoginService
 import com.kailin.basic_arch.app.DataStateViewModel
 import com.kailin.basic_arch.data.RepoResult
 import com.kailin.basic_arch.data.login.*
+import com.kailin.basic_arch.model.user.UserInfo
 import com.kailin.basic_arch.utils.SingleLiveEvent
 import com.kailin.basic_arch.utils.connect.ConnectHelper
 import com.kailin.basic_arch.utils.isEmail

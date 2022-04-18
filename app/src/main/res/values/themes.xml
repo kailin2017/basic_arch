@@ -14,7 +14,7 @@
 
     <style name="Theme.CoroutinesArch.CustomView.Button" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">false</item>
     </style>
 </resources>

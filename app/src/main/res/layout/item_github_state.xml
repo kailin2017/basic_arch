@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/item_horizontal_margin"
+        android:paddingVertical="@dimen/item_vertical_margin">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+        <com.kailin.basic_arch.widget.TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Test Error msg"/>
+
+        <com.kailin.basic_arch.widget.Button
+            android:id="@+id/retry"
+            style="@style/Theme.CoroutinesArch.CustomView.Button"
+            android:layout_marginTop="@dimen/item_vertical_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_retry" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,12 +1,12 @@
 package com.kailin.basic_arch.ui.news
 
-import com.kailin.basic_arch.data.news.TaipeiNewsItem
+import com.kailin.basic_arch.model.news.TaipeiNews
 import com.kailin.basic_arch.databinding.ItemNewsBinding
 import com.kailin.basic_arch.widget.recyclerView.MyDataAdapter
 import com.kailin.basic_arch.widget.recyclerView.ViewHolder
 
-class NewsAdapter(callback: (TaipeiNewsItem, Int) -> Unit) :
-    MyDataAdapter<ItemNewsBinding, TaipeiNewsItem>(callback) {
+class NewsAdapter(callback: (TaipeiNews, Int) -> Unit) :
+    MyDataAdapter<ItemNewsBinding, TaipeiNews>(callback) {
 
     override val viewDataBindingClass: Class<ItemNewsBinding>
         get() = ItemNewsBinding::class.java

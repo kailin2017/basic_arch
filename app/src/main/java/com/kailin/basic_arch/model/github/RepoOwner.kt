@@ -1,4 +1,4 @@
-package com.kailin.basic_arch.data.github
+package com.kailin.basic_arch.model.github
 
 data class RepoOwner(
     val avatar_url: String,

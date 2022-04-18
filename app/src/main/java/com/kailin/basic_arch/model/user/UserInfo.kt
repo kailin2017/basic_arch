@@ -1,4 +1,4 @@
-package com.kailin.basic_arch.data.login
+package com.kailin.basic_arch.model.user
 
 data class UserInfo(
     val code: String = "",

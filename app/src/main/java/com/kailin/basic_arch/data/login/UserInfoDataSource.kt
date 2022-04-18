@@ -3,6 +3,7 @@ package com.kailin.basic_arch.data.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kailin.basic_arch.BuildConfig
+import com.kailin.basic_arch.model.user.UserInfo
 
 object UserInfoDataSource {
 

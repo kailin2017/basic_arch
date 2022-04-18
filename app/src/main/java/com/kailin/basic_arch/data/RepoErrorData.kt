@@ -1,6 +1,6 @@
-package com.kailin.basic_arch.data.error
+package com.kailin.basic_arch.data
 
-data class ErrorRespData(
+data class RepoErrorData(
     val code: Int,
     val error: String
 ) {
