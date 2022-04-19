@@ -18,6 +18,7 @@
 
     <string name="github_title">Github</string>
     <string name="github_keyword">Keyword</string>
+    <string name="github_empty">Search empty</string>
     <string name="item_watch">Watch %d</string>
     <string name="item_star">Star %d</string>
     <string name="item_fork">Fork %d</string>

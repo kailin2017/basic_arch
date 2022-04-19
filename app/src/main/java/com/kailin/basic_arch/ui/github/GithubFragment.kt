@@ -1,6 +1,7 @@
 package com.kailin.basic_arch.ui.github
 
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.databinding.ViewDataBinding
@@ -9,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kailin.basic_arch.BR
 import com.kailin.basic_arch.R
 import com.kailin.basic_arch.app.DataBindingConfig
@@ -33,7 +33,21 @@ class GithubFragment : DataBindingFragment() {
                 false
             }
         }
+
+        override fun onKey(var1: View, var2: Int, var3: KeyEvent?): Boolean {
+            return if (var2 == KeyEvent.KEYCODE_ENTER && var3?.action == KeyEvent.ACTION_DOWN) {
+                searchRepo()
+                true
+            } else {
+                false
+            }
+        }
+
+        override fun onRetry() {
+            searchRepo()
+        }
     }
+
     private lateinit var searchJob: Job
 
     override fun onCreateDataBindingConfig(): DataBindingConfig {
@@ -56,15 +70,28 @@ class GithubFragment : DataBindingFragment() {
         if (binding !is FragmentGithubBinding) {
             return
         }
+
         lifecycleScope.launch {
             pagingAdapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.Loading }
                 .collect { binding.recyclerView.scrollToPosition(0) }
         }
+
+        pagingAdapter.addLoadStateListener {
+            viewModel.setLoading(it.source.refresh is LoadState.Loading)
+
+            val errorState = it.source.append as? LoadState.Error
+                ?: it.source.prepend as? LoadState.Error
+                ?: it.append as? LoadState.Error
+                ?: it.prepend as? LoadState.Error
+
+            viewModel.setShowError(errorState != null)
+        }
     }
 
     private fun searchRepo() {
+        viewModel.setShowError(false)
         if (::searchJob.isInitialized) {
             searchJob.cancel()
         }

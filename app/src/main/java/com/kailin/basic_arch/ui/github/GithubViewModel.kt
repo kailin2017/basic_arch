@@ -1,5 +1,6 @@
 package com.kailin.basic_arch.ui.github
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -19,11 +20,12 @@ class GithubViewModel : DataStateViewModel() {
     }
     private var currentKeyword: String? = null
     private var mCurrentRepo: Flow<PagingData<Repo>>? = null
-    private val _keyword = MutableLiveData<String>()
-    val keyword = _keyword
+    private val _isShowError = MutableLiveData<Boolean>()
+    val isShowError: LiveData<Boolean> = _isShowError
+    val keyword = MutableLiveData<String>()
 
     fun searchRepo(): Flow<PagingData<Repo>>? {
-        val keywordValue: String = _keyword.value ?: ""
+        val keywordValue: String = keyword.value ?: ""
         if (currentKeyword == keywordValue) {
             return mCurrentRepo
         }
@@ -31,5 +33,9 @@ class GithubViewModel : DataStateViewModel() {
         mCurrentRepo =
             githubPagingRepository.getPagingData(currentKeyword!!).cachedIn(viewModelScope)
         return mCurrentRepo
+    }
+
+    fun setShowError(isShowError: Boolean) {
+        _isShowError.value = isShowError
     }
 }

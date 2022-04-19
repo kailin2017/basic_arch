@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/view_horizontal_margin"
+            android:paddingVertical="@dimen/view_vertical_margin">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/view_vertical_margin"
+                app:adapter="@{adapter}"
+                app:isVisible="@{!viewModel.isLoading()}"
+                app:itemDecoration="@{itemDecoration}"
+                app:layoutManager="@{layoutManager}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/keywordInputLayout"
+                app:onScrollListener="@{eventProxy}"
+                tools:listitem="@layout/item_github" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:indeterminate="true"
+                app:isVisible="@{viewModel.isLoading()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.kailin.basic_arch.widget.EditTextInputLayout
+                android:id="@+id/keywordInputLayout"
+                style="@style/Theme.CoroutinesArch.CustomView.EditTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/github_keyword"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <com.kailin.basic_arch.widget.EditText
+                    android:id="@+id/keywordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:text="@={viewModel.keyword}"
+                    app:onEditorAction="@{eventProxy::onSearchEditorAction}"
+                    app:onKey="@{eventProxy::onKey}" />
+
+            </com.kailin.basic_arch.widget.EditTextInputLayout>
+
+            <com.kailin.basic_arch.widget.TextView
+                android:id="@+id/emptyMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_baseline_search_off_24"
+                android:text="@string/github_empty"
+                app:isVisible="@{!viewModel.isLoading() &amp;&amp; adapter.itemCount==0}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.kailin.basic_arch.widget.TextView
+                android:id="@+id/errorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_baseline_error_outline_24"
+                app:isVisible="@{!viewModel.isLoading() &amp;&amp; viewModel.isShowError()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.kailin.basic_arch.widget.Button
+                android:id="@+id/retry"
+                style="@style/Theme.CoroutinesArch.CustomView.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_horizontal_margin"
+                android:text="@string/item_retry"
+                android:onClick="@{()->eventProxy.onRetry()}"
+                app:isVisible="@{!viewModel.isLoading() &amp;&amp; viewModel.isShowError()}"
+                app:layout_constraintLeft_toLeftOf="@id/errorMessage"
+                app:layout_constraintRight_toRightOf="@id/errorMessage"
+                app:layout_constraintTop_toBottomOf="@id/errorMessage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <data>
 
         <import type="android.view.View" />
@@ -24,100 +132,5 @@
         <variable
             name="itemDecoration"
             type="androidx.recyclerview.widget.RecyclerView.ItemDecoration" />
-
-        <variable
-            name="onScrollListener"
-            type="android.widget.AbsListView.RecyclerListener" />
     </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.MainActivity">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:paddingHorizontal="@dimen/view_horizontal_margin"
-            android:paddingVertical="@dimen/view_vertical_margin">
-
-            <com.kailin.basic_arch.widget.EditTextInputLayout
-                android:id="@+id/keywordInputLayout"
-                style="@style/Theme.CoroutinesArch.CustomView.EditTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/github_keyword"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed">
-
-                <com.kailin.basic_arch.widget.EditText
-                    android:id="@+id/keywordEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:text="@={viewModel.keyword}"
-                    app:onEditorAction="@{eventProxy::onSearchEditorAction}" />
-
-            </com.kailin.basic_arch.widget.EditTextInputLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/view_vertical_margin"
-                app:adapter="@{adapter}"
-                app:itemDecoration="@{itemDecoration}"
-                app:layoutManager="@{layoutManager}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/keywordInputLayout"
-                app:onScrollListener="@{eventProxy}"
-                tools:listitem="@layout/item_github" />
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:indeterminate="true"
-                android:visibility="@{viewModel.isLoading()? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.kailin.basic_arch.widget.TextView
-                android:id="@+id/errorMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isLoading()? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.kailin.basic_arch.widget.Button
-                android:id="@+id/retry"
-                style="@style/Theme.CoroutinesArch.CustomView.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/item_retry"
-                android:layout_marginTop="@dimen/view_horizontal_margin"
-                android:visibility="@{viewModel.isLoading()? View.VISIBLE : View.GONE}"
-                app:layout_constraintLeft_toLeftOf="@id/errorMessage"
-                app:layout_constraintRight_toRightOf="@id/errorMessage"
-                app:layout_constraintTop_toBottomOf="@id/errorMessage" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

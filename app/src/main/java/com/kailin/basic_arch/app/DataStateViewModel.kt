@@ -1,6 +1,8 @@
 package com.kailin.basic_arch.app
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
 
 abstract class DataStateViewModel : ViewModel() {
 
@@ -10,8 +12,19 @@ abstract class DataStateViewModel : ViewModel() {
     protected val _isLoading = MediatorLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun exception(e: Throwable) {
-        e.printStackTrace()
-        _message.postValue(e.message)
+    init {
+        setLoading(false)
+    }
+
+    fun setThrowable(e: Throwable) {
+        e.message?.let { setMessage(it) }
+    }
+
+    fun setLoading(isLoading: Boolean) {
+        _isLoading.value = isLoading
+    }
+
+    fun setMessage(message: String) {
+        _message.postValue(message)
     }
 }

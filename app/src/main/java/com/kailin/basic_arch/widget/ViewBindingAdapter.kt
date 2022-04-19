@@ -2,6 +2,7 @@ package com.kailin.basic_arch.widget
 
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,11 +23,19 @@ fun setOnKeyListener(
 }
 
 @BindingAdapter(value = ["error"], requireAll = false)
-fun setOnError(
+fun setEditTextInputLayoutError(
     view: EditTextInputLayout,
     error: CharSequence?
 ) {
     view.error = error
+}
+
+@BindingAdapter(value = ["isVisible"], requireAll = false)
+fun isVisible(
+    view: View,
+    isVisible: Boolean?
+) {
+    view.isVisible = isVisible ?: true
 }
 
 @BindingAdapter(value = ["adapter"], requireAll = false)
