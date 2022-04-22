@@ -22,6 +22,10 @@
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exoPlayerFragment"
+            app:destination="@id/exoPlayerFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -41,4 +45,10 @@
         android:name="com.kailin.basic_arch.ui.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/exoPlayerFragment"
+        android:name="com.kailin.basic_arch.ui.exoplayer.ExoPlayerFragment"
+        android:label="ExoPlayerFragment"
+        tools:layout="@layout/fragment_exoplayer" />
 </navigation>

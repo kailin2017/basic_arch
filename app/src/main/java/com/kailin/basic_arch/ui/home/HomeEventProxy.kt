@@ -7,4 +7,6 @@ interface HomeEventProxy {
     fun onClickNews()
 
     fun onClickLogin()
+
+    fun onClickExoPlayer()
 }

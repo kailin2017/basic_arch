@@ -15,30 +15,28 @@ class HomeFragment : DataBindingFragment(), HomeEventProxy {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    override fun onCreateDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(R.layout.fragment_home)
+    override fun onCreateDataBindingConfig(): DataBindingConfig =
+        DataBindingConfig(R.layout.fragment_home)
             .setDataStateViewModel(BR.viewModel, viewModel)
             .addParam(BR.eventProxy, this)
-    }
 
-    override fun onViewInit(binding: ViewDataBinding) {
+    override fun onViewInit(binding: ViewDataBinding) =
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     requireActivity().finishAndRemoveTask()
                 }
             })
-    }
 
-    override fun onClickGithub() {
+    override fun onClickGithub() =
         navigation(HomeFragmentDirections.actionHomeFragmentToGithubFragment())
-    }
 
-    override fun onClickNews() {
+    override fun onClickNews() =
         navigation(HomeFragmentDirections.actionHomeFragmentToNewsFragment())
-    }
 
-    override fun onClickLogin() {
+    override fun onClickLogin() =
         navigation(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
-    }
+
+    override fun onClickExoPlayer() =
+        navigation(HomeFragmentDirections.actionHomeFragmentToExoPlayerFragment())
 }

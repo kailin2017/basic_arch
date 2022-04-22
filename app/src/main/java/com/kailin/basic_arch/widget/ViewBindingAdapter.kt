@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.StyledPlayerView
 
 @BindingAdapter(value = ["onEditorAction"], requireAll = false)
 fun setOnEditorActionListener(
@@ -60,4 +62,12 @@ fun setRecyclerViewOnScrollListener(
     listener: RecyclerView.OnScrollListener
 ) {
     view.addOnScrollListener(listener)
+}
+
+@BindingAdapter(value = ["player"], requireAll = false)
+fun setExoPlayer(
+    view: StyledPlayerView,
+    player: Player?
+) {
+    view.player = player
 }

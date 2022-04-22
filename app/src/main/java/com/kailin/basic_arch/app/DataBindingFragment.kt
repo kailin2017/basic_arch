@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.kailin.basic_arch.R
 import com.kailin.basic_arch.widget.DialogHelper
+import com.kailin.basic_arch.widget.removeActionBar
 import com.kailin.basic_arch.widget.setActionBar
 
 abstract class DataBindingFragment : Fragment() {
@@ -39,7 +40,6 @@ abstract class DataBindingFragment : Fragment() {
     }
 
     abstract fun onCreateDataBindingConfig(): DataBindingConfig
-
 
     protected open fun onCreateStateObserver(viewModel: DataStateViewModel) {
         viewModel.message.observe(viewLifecycleOwner) {
@@ -68,5 +68,10 @@ abstract class DataBindingFragment : Fragment() {
             it.unbind()
         }
         viewDataBinding = null
+        removeActionBar()
+    }
+
+    fun setBindVariable(key: Int, value: Any?) {
+        viewDataBinding?.setVariable(key, value)
     }
 }

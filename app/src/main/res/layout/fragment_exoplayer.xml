@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <com.google.android.exoplayer2.ui.StyledPlayerView
+                android:id="@+id/playerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintTop_toTopOf="parent"
+                app:player="@{player}" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:isVisible="@{viewModel.isPlayerLoading()}"
+                app:layout_constraintBottom_toBottomOf="@id/playerView"
+                app:layout_constraintLeft_toLeftOf="@id/playerView"
+                app:layout_constraintRight_toRightOf="@id/playerView"
+                app:layout_constraintTop_toTopOf="@id/playerView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <data>
+
+        <variable
+            name="player"
+            type="com.google.android.exoplayer2.Player" />
+
+        <variable
+            name="viewModel"
+            type="com.kailin.basic_arch.ui.exoplayer.ExoPlayerViewModel" />
+    </data>
+
+</layout>

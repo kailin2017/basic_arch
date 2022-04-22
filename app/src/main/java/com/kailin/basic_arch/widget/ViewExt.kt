@@ -36,6 +36,13 @@ fun Fragment.setActionBar(toolbar: Toolbar) {
     }
 }
 
+fun Fragment.removeActionBar(){
+    if (requireActivity() is AppCompatActivity) {
+        val activity = requireActivity() as AppCompatActivity
+        activity.setSupportActionBar(null)
+    }
+}
+
 fun Fragment.navigationPop() {
     findNavController().popBackStack()
 }
