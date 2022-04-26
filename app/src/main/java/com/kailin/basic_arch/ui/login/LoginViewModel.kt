@@ -11,15 +11,14 @@ import com.kailin.basic_arch.model.user.UserInfo
 import com.kailin.basic_arch.utils.SingleLiveEvent
 import com.kailin.basic_arch.utils.connect.ConnectHelper
 import com.kailin.basic_arch.utils.isEmail
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : DataStateViewModel() {
-
-    private val loginRepository: LoginRepository by lazy {
-        val service = ConnectHelper.createService(LoginService::class.java)
-        val dataSource = LoginDataSourceImpl(service)
-        LoginRepositoryImpl(dataSource)
-    }
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val loginRepository: LoginRepository
+) : DataStateViewModel() {
 
     private val loginResult = loginRepository.observerLogin()
     private val _usernameError = MutableLiveData(R.string.inputText_blank)

@@ -7,7 +7,9 @@ import com.kailin.basic_arch.BR
 import com.kailin.basic_arch.R
 import com.kailin.basic_arch.app.DataBindingConfig
 import com.kailin.basic_arch.app.DataBindingFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExoPlayerFragment : DataBindingFragment() {
 
     private val viewModel: ExoPlayerViewModel by viewModels()

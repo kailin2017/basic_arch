@@ -6,8 +6,9 @@ import com.kailin.basic_arch.api.news.TaipeiNewsResponse
 import com.kailin.basic_arch.data.RepoResult
 import com.kailin.basic_arch.data.login.UserInfoDataSource
 import com.kailin.basic_arch.model.user.UserInfo
+import javax.inject.Inject
 
-class NewsRepositoryImpl(
+class NewsRepositoryImpl @Inject constructor(
     private val taipeiNewsDataSource: TaipeiNewsDataSource,
 ) : NewsRepository {
 

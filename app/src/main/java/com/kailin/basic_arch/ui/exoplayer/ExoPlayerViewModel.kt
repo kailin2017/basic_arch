@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.kailin.basic_arch.app.DataStateViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ExoPlayerViewModel : DataStateViewModel(), Player.Listener {
+@HiltViewModel
+class ExoPlayerViewModel @Inject constructor() : DataStateViewModel(), Player.Listener {
 
     private val _isPlayerLoading = MutableLiveData<Boolean>()
     val isPlayerLoading: LiveData<Boolean> = _isPlayerLoading

@@ -13,7 +13,9 @@ import com.kailin.basic_arch.app.DataBindingConfig
 import com.kailin.basic_arch.app.DataBindingFragment
 import com.kailin.basic_arch.widget.ToastHelper
 import com.kailin.basic_arch.widget.navigationPop
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : DataBindingFragment(), LoginEventProxy {
 
     private val viewModel: LoginViewModel by viewModels()

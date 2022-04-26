@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.kailin.basic_arch.data.RepoResult
 import com.kailin.basic_arch.model.user.UserInfo
+import javax.inject.Inject
 
-class LoginRepositoryImpl(
+class LoginRepositoryImpl @Inject constructor(
     private val dataSource: LoginDataSource,
 ) : LoginRepository {
 

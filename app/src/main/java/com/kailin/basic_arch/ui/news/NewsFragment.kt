@@ -14,12 +14,14 @@ import com.kailin.basic_arch.R
 import com.kailin.basic_arch.app.DataBindingConfig
 import com.kailin.basic_arch.app.DataBindingFragment
 import com.kailin.basic_arch.utils.ActionViewHelper
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NewsFragment : DataBindingFragment(),
     Toolbar.OnMenuItemClickListener {
 
     private val viewModel: NewsViewModel by viewModels()
+
     private val adapter: NewsAdapter by lazy {
         NewsAdapter { item, _ ->
             ActionViewHelper.actionView(requireContext(), item.url)

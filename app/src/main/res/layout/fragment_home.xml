@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.kailin.basic_arch.ui.home.HomeViewModel" />
-
-        <variable
             name="eventProxy"
             type="com.kailin.basic_arch.ui.home.HomeEventProxy" />
     </data>

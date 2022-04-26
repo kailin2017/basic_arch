@@ -4,7 +4,9 @@ import androidx.databinding.ViewDataBinding
 import com.kailin.basic_arch.R
 import com.kailin.basic_arch.app.DataBindingActivity
 import com.kailin.basic_arch.app.DataBindingConfig
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : DataBindingActivity() {
 
     override fun onCreateDataBindingConfig(): DataBindingConfig {

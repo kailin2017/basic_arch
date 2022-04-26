@@ -11,11 +11,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class TaipeiNewsDataSourceImpl(
+class TaipeiNewsDataSourceImpl @Inject constructor(
     private val service: TaipeiNewsService,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaipeiNewsDataSource {
+
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     private val observerRepo = MutableLiveData<RepoResult<TaipeiNewsResponse>>()
 

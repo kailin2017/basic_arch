@@ -13,11 +13,8 @@ import com.kailin.basic_arch.widget.setActionBar
 
 class HomeFragment : DataBindingFragment(), HomeEventProxy {
 
-    private val viewModel: HomeViewModel by viewModels()
-
     override fun onCreateDataBindingConfig(): DataBindingConfig =
         DataBindingConfig(R.layout.fragment_home)
-            .setDataStateViewModel(BR.viewModel, viewModel)
             .addParam(BR.eventProxy, this)
 
     override fun onViewInit(binding: ViewDataBinding) =

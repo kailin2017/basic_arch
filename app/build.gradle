@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -86,6 +87,10 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
     implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
     implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$dagger_hilt_version"
     
     // leakcanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
@@ -94,4 +99,8 @@ dependencies {
 //    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 //    testImplementation "androidx.paging:paging-common:$paging_version"
+}
+
+kapt {
+    correctErrorTypes true
 }

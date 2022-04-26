@@ -12,11 +12,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class LoginDataSourceImpl(
+class LoginDataSourceImpl @Inject constructor(
     private val loginService: LoginService,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : LoginDataSource {
+
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     private val loginRespData = MutableLiveData<RepoResult<UserInfo>>()
 

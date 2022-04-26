@@ -15,11 +15,13 @@ import com.kailin.basic_arch.R
 import com.kailin.basic_arch.app.DataBindingConfig
 import com.kailin.basic_arch.app.DataBindingFragment
 import com.kailin.basic_arch.databinding.FragmentGithubBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class GithubFragment : DataBindingFragment() {
 
     private val viewModel: GithubViewModel by viewModels()

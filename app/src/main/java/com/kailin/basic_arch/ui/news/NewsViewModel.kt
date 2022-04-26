@@ -2,40 +2,37 @@ package com.kailin.basic_arch.ui.news
 
 import androidx.lifecycle.*
 import com.kailin.basic_arch.api.news.TaipeiNewsResponse
-import com.kailin.basic_arch.api.news.TaipeiNewsService
 import com.kailin.basic_arch.app.DataStateViewModel
 import com.kailin.basic_arch.data.RepoResult
-import com.kailin.basic_arch.data.news.*
+import com.kailin.basic_arch.data.news.NewsRepository
 import com.kailin.basic_arch.model.news.TaipeiNews
-import com.kailin.basic_arch.utils.connect.ConnectHelper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsViewModel : DataStateViewModel() {
+@HiltViewModel
+class NewsViewModel @Inject constructor(
+    private val repository: NewsRepository
+) : DataStateViewModel() {
 
-    private val mNewsRepository: NewsRepository by lazy {
-        val service = ConnectHelper.createService(TaipeiNewsService::class.java)
-        val dataSource = TaipeiNewsDataSourceImpl(service)
-        NewsRepositoryImpl(dataSource)
-    }
-
-    val timeZone: LiveData<String> = mNewsRepository.userInfo().map { it.timeZone }
+    val timeZone: LiveData<String> = repository.userInfo().map { it.timeZone }
 
     val taipeiNews: LiveData<List<TaipeiNews>> =
-        mNewsRepository.observerNews().switchMap { filterTaipeiNews(it) }
+        repository.observerNews().switchMap { filterTaipeiNews(it) }
 
     private val _isEmpty = MutableLiveData(false)
 
     val isEmpty: LiveData<Boolean> = _isEmpty
 
     init {
-        _isLoading.addSource(mNewsRepository.observerNews().map { it is RepoResult.Loading }) {
+        _isLoading.addSource(repository.observerNews().map { it is RepoResult.Loading }) {
             _isLoading.value = it
         }
     }
 
     fun fetchTaipeiNews() {
         viewModelScope.launch {
-            mNewsRepository.fetchNews()
+            repository.fetchNews()
         }
     }
 

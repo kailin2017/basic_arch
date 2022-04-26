@@ -6,9 +6,9 @@ import androidx.paging.PagingData
 import com.kailin.basic_arch.api.github.GithubService
 import com.kailin.basic_arch.model.github.Repo
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GithubPagingRepository(
-    private val pageSize: Int = 50,
+class GithubPagingRepository @Inject constructor(
     private val service: GithubService
 ) {
 
@@ -17,5 +17,9 @@ class GithubPagingRepository(
             config = PagingConfig(pageSize),
             pagingSourceFactory = { GithubPagingSource(keyword, service) }
         ).flow
+    }
+
+    companion object {
+        private const val pageSize: Int = 50
     }
 }
