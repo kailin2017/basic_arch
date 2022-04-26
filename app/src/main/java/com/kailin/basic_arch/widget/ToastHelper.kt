@@ -3,7 +3,7 @@ package com.kailin.basic_arch.widget
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import com.kailin.basic_arch.app.MyApplication
+import com.kailin.basic_arch.app.App
 
 object ToastHelper {
 
@@ -16,7 +16,7 @@ object ToastHelper {
     private fun makeText(text: CharSequence?, duration: Int) {
         text ?: return
         toast?.cancel()
-        toast = Toast.makeText(MyApplication.instance, text, duration).also { it.show() }
+        toast = Toast.makeText(App.instance, text, duration).also { it.show() }
         Handler(Looper.myLooper()!!).postDelayed({
             toast?.cancel()
             toast = null

@@ -16,9 +16,8 @@ import javax.inject.Inject
 
 class LoginDataSourceImpl @Inject constructor(
     private val loginService: LoginService,
+    private val dispatcher: CoroutineDispatcher
 ) : LoginDataSource {
-
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     private val loginRespData = MutableLiveData<RepoResult<UserInfo>>()
 

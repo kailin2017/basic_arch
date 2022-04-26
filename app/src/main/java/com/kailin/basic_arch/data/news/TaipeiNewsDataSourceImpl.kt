@@ -15,9 +15,8 @@ import javax.inject.Inject
 
 class TaipeiNewsDataSourceImpl @Inject constructor(
     private val service: TaipeiNewsService,
+    private val dispatcher: CoroutineDispatcher
 ) : TaipeiNewsDataSource {
-
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     private val observerRepo = MutableLiveData<RepoResult<TaipeiNewsResponse>>()
 

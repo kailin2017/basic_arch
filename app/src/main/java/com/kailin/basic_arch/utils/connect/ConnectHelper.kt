@@ -1,7 +1,10 @@
 package com.kailin.basic_arch.utils.connect
 
+import android.annotation.SuppressLint
 import com.kailin.basic_arch.BuildConfig
 import com.kailin.basic_arch.utils.GsonHelper
+import com.kailin.basic_arch.utils.connect.interceptor.DefaultInterceptor
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,18 +17,21 @@ import javax.net.ssl.X509TrustManager
 
 object ConnectHelper {
 
-    val okHttpClient: OkHttpClient by lazy {
+    fun createOkHttp(interceptor: Interceptor): OkHttpClient {
         val builder = OkHttpClient.Builder()
-            .addNetworkInterceptor(OkHttpInterceptor())
+            .addNetworkInterceptor(interceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .connectTimeout(BuildConfig.OKHTTP_CONECT_TIMEOUT, TimeUnit.SECONDS)
 
         if (BuildConfig.DEBUG) {
             try {
-                val x509TrustManager = object : X509TrustManager {
+                val x509TrustManager = @SuppressLint("CustomX509TrustManager")
+                object : X509TrustManager {
+                    @SuppressLint("TrustAllX509TrustManager")
                     override fun checkClientTrusted(p0: Array<out X509Certificate>?, p1: String?) {
                     }
 
+                    @SuppressLint("TrustAllX509TrustManager")
                     override fun checkServerTrusted(p0: Array<out X509Certificate>?, p1: String?) {
                     }
 
@@ -40,16 +46,14 @@ object ConnectHelper {
             }
         }
 
-        return@lazy builder.build()
+        return builder.build()
     }
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
+    fun createRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
+        return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BuildConfig.OKHTTP_BASEURL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(GsonHelper.gson))
             .build()
     }
-
-    fun <T> createService(service: Class<T>): T = retrofit.create(service)
 }
