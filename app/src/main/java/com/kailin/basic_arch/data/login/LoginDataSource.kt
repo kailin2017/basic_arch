@@ -8,5 +8,5 @@ interface LoginDataSource {
 
     fun observerLogin(): LiveData<RepoResult<UserInfo>>
 
-    suspend fun login(username: String, password: String)
+    suspend fun login(username: String, password: String, headerMap: HashMap<String, String>)
 }

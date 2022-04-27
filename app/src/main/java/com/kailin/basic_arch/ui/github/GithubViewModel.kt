@@ -7,9 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.kailin.basic_arch.app.DataStateViewModel
 import com.kailin.basic_arch.data.github.GithubPagingRepository
-import com.kailin.basic_arch.api.github.GithubService
 import com.kailin.basic_arch.model.github.Repo
-import com.kailin.basic_arch.utils.connect.ConnectHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

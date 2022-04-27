@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kailin.basic_arch.api.login.LoginRequest
 import com.kailin.basic_arch.api.login.LoginService
-import com.kailin.basic_arch.data.RepoResult
 import com.kailin.basic_arch.data.RepoErrorData
+import com.kailin.basic_arch.data.RepoResult
 import com.kailin.basic_arch.model.user.UserInfo
 import com.kailin.basic_arch.utils.connect.toData
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -23,10 +22,14 @@ class LoginDataSourceImpl @Inject constructor(
 
     override fun observerLogin(): LiveData<RepoResult<UserInfo>> = loginRespData
 
-    override suspend fun login(username: String, password: String) = withContext(dispatcher) {
+    override suspend fun login(
+        username: String,
+        password: String,
+        headerMap: HashMap<String, String>
+    ) = withContext(dispatcher) {
         try {
             loginRespData.postValue(RepoResult.Loading)
-            val response = loginService.login(LoginRequest(username, password), UserInfoDataSource.getHeaderMap())
+            val response = loginService.login(LoginRequest(username, password), headerMap)
             loginRespData.postValue(
                 if (response.isSuccessful && response.body() != null) {
                     RepoResult.Success(response.body()!!)
